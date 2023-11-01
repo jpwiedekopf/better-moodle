@@ -141,39 +141,11 @@ const currentScriptVersion = [];
 /** @type {[number, number, number]} */
 const latestScriptVersion = [];
 /** @type {Promise<boolean>} */
-const updateAvailable = fetch(
-    'https://api.github.com/repos/jxn-30/better-moodle/releases/latest'
-)
-    .then(res => res.json())
-    .then(({ tag_name }) =>
-        tag_name
-            .replace(/^v/, '')
-            .split('.')
-            .map(e => Number(e))
-    )
-    .then(([latestMajor, latestMinor, latestPatch]) => {
-        const [currentMajor, currentMinor, currentPatch] =
-            GM_info.script.version.split('.').map(e => Number(e));
-
-        latestScriptVersion.splice(0, 3, latestMajor, latestMinor, latestPatch);
-        Object.freeze(latestScriptVersion);
-
-        currentScriptVersion.splice(
-            0,
-            3,
-            currentMajor,
-            currentMinor,
-            currentPatch
-        );
-        Object.freeze(currentScriptVersion);
-
-        return (
-            latestMajor > currentMajor || // major update
-            latestMinor > currentMinor || // minor update
-            latestPatch > currentPatch // patch update
-        );
-    });
-
+//removed code to disable updating
+const updateAvailable = new Promise((resolve, reject) => {
+  resolve(false);
+});
+    
 // this is adopted from https://github.com/p01/mmd.js
 /**
  * converts a Markdown text into HTML
